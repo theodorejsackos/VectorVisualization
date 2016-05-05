@@ -1,4 +1,4 @@
-package Render;
+package render;
 
 import java.awt.image.BufferedImage;
 

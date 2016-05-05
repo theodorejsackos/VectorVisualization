@@ -1,4 +1,4 @@
-package Main;
+package entry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -34,13 +34,13 @@ public class Main {
 		// Create window to dispay camera feed
 		Mat size = new Mat();
 		videoCapture.retrieve(size);
-		Render.RenderWindow test = new Render.RenderWindow(size.width(),
+		render.RenderWindow test = new render.RenderWindow(size.width(),
 				size.height(), "Video Feed");
 		// Feed the video stream
 		while (true) {
 			Mat frame = new Mat();
 			videoCapture.retrieve(frame);
-			test.update(Render.Proccessing.matToBufferedImage(frame, null));
+			test.update(render.Proccessing.matToBufferedImage(frame, null));
 		}
 	}
 }
