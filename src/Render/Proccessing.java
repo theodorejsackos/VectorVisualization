@@ -12,6 +12,13 @@ import org.opencv.core.Mat;
  */
 public class Proccessing {
 
+	public static structs.ScreenRegion locateFiducialScreen(Mat fieldOfView){
+	
+		
+		return null;
+	}
+	
+	
 	/**
 	 * http:// stackoverflow.com/questions/30262834/convert-image-in-mat-to-
 	 * bufferedimage
