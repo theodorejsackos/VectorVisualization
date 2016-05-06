@@ -66,7 +66,7 @@ public class RenderWindow extends JFrame {
 	 * 
 	 * @param newImg
 	 */
-	public void update(BufferedImage newImg) {
-		feed.updateImage(newImg);
+	public void update(BufferedImage newImg, structs.ScreenRegion frame) {
+		feed.updateImage(newImg, frame);
 	}
 }
