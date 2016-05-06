@@ -64,7 +64,7 @@ public class VideoPane extends JPanel {
 	}
 	
 	private boolean validNewBorder(ScreenRegion newRegion){
-		if(newRegion.getArea() < (this.border.getArea() / 10))
+		if(newRegion.getArea() < (this.border.getArea() / 6))
 			return false;
 		else 
 			return true;

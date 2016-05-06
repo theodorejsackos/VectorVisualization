@@ -24,13 +24,18 @@ public class Processing {
 		BufferedImage toScan = matToBufferedImage(fieldOfView, null);
 		//Construct screen region object to bound the FiducialScreen
 		ScreenRegion region = new ScreenRegion();
+		region.setX(0);
+		region.setWidth(toScan.getWidth());
 		
 		//Control variables for scanning the image
 		boolean foundTop = false;
 		boolean onDarkBar = false;
+		boolean grabSides = false;
 		int bars = 0;
 		int expectedNumBars = 18;
 		int barThickness = 0;
+		int averageWidth = 0;
+		
 		
 		for(int i = 0; i < toScan.getHeight(); i += 5){
 			bars = 0;
@@ -38,16 +43,35 @@ public class Processing {
 				Color c = new Color(toScan.getRGB(j, i));
 				double lum = lum(c.getRed(), c.getGreen(), c.getBlue());
 				
+				//If we found the top of the Fiducucial Screen we want to find the left side.
+				if(grabSides && bars > 5){
+					grabSides = false;
+					region.setX(j - 80);
+				}
+				
+				//Calculate the width of the region to surround target Screen
+				if(bars > expectedNumBars){
+					if(averageWidth == 0)
+						averageWidth = j - region.getX();
+					else
+						averageWidth = (averageWidth + (j - region.getX())) / 2;
+					//System.out.printf("y = %d, j = %d Average width: %d\n", i, j, averageWidth);
+				}
+				
+				//Count the pixel thickness of a bar (NOT SURE IF THIS IS BENEFICIAL YET.)
 				if(lum > threshHold && !onDarkBar)
 					barThickness++;
 				if(lum < threshHold && onDarkBar)
 					barThickness++;
 				
-				if(lum > threshHold && onDarkBar && barThickness > 2){
+				//If we were previously on a dark bar, and now find a light spot, we found a new bar.
+				if(lum > threshHold && onDarkBar && barThickness > 3){
 					bars++;
 					onDarkBar = !onDarkBar;
 				}
-				if(lum < threshHold && !onDarkBar && barThickness > 2){
+				
+				//If we were previously on a light bar, and now find a dark spot, we found a new bar.
+				if(lum < threshHold && !onDarkBar && barThickness > 3){
 					bars++;
 					onDarkBar = !onDarkBar;
 				}
@@ -55,17 +79,18 @@ public class Processing {
 			}
 			if(bars > expectedNumBars && !foundTop){
 				foundTop = true;
-				region.setY(i);
+				grabSides = true;
+				region.setY(i - 15);
 			}else if(bars > expectedNumBars && foundTop)
 				continue;
 			else if(bars < expectedNumBars && foundTop){
-				region.setHeight(i - region.getY());
+				region.setHeight((i - region.getY()) + 15);
 				break;
 			}
 		}
 		
-		region.setX(0);
-		region.setWidth(toScan.getWidth());
+		if(averageWidth > 50)
+			region.setWidth((int) (averageWidth * .6));
 		region.calculateArea();
 		
 		return region;
