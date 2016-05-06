@@ -4,7 +4,8 @@ public class ScreenRegion {
 
 	private int upperLeftX, upperLeftY;
 	private int width, height;
-
+	private int area;
+	
 	public ScreenRegion() {
 	}
 
@@ -31,6 +32,10 @@ public class ScreenRegion {
 		return this.width;
 	}
 
+	public int getArea(){
+		return this.area;
+	}
+	
 	public void setX(int x) {
 		this.upperLeftX = x;
 	}
@@ -45,5 +50,10 @@ public class ScreenRegion {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public void calculateArea(){
+		this.area = this.width * this.height;
+		//System.out.println(area);
 	}
 }
