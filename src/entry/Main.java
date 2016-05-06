@@ -1,14 +1,13 @@
 package entry;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
+//import java.io.File;
+//import java.io.IOException;
+//import javax.imageio.ImageIO;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.imgcodecs.*;
-import org.opencv.imgproc.Imgproc;
+//import org.opencv.core.Size;
+//import org.opencv.imgcodecs.*;
+//import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
 
 import render.Processing;
@@ -45,20 +44,12 @@ public class Main {
 				size.height(), "Video Feed");
 		
 		
-		int control = 0;
 		// Feed the video stream
 		while (true) {
 			Mat frame = new Mat();
 			videoCapture.retrieve(frame);
 			Mat greyScale = frame.clone();
 			
-			if(control == 0)
-				try {
-					ImageIO.write(Processing.matToBufferedImage(greyScale, null), "png", new File("output.png"));
-					control = 1;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			
 			structs.ScreenRegion region = Processing.locateFiducialScreen(greyScale, 125);
 			test.update(Processing.matToBufferedImage(frame, null), region);
