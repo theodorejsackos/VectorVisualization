@@ -1,0 +1,20 @@
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   bin/.gitignore
+	deleted:    bin/Render/Processing.class
+	deleted:    bin/Render/RenderWindow.class
+	deleted:    bin/Render/VideoPane.class
+	modified:   bin/entry/Main.class
+	deleted:    src/render/Processing.java
+	deleted:    src/render/RenderWindow.java
+	deleted:    src/render/VideoPane.java
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	status
+
